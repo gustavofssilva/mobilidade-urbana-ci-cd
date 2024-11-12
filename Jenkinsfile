@@ -1,39 +1,37 @@
 pipeline {
-    agent any  // Seleciona qualquer nó disponível
+    agent any
     tools {
-        nodejs 'NodeJS'  // Certifique-se de que o NodeJS está instalado e configurado em "Gerenciar Jenkins"
+        nodejs 'NodeJS'  // Nome da configuração de NodeJS criada nas configurações do Jenkins
     }
     stages {
         stage('Checkout') {
             steps {
                 echo 'Fazendo o checkout do código...'
-                checkout scm  // Obtém o código do repositório configurado
+                checkout scm
             }
         }
         stage('Build') {
             steps {
                 echo 'Iniciando etapa de Build...'
-                bat 'npm install'  // Instala dependências usando o npm no Windows
+                bat 'npm install'
             }
         }
         stage('Test') {
             steps {
                 echo 'Iniciando etapa de Testes...'
-                bat 'npm test'  // Roda os testes do projeto
+                bat 'npm test'
             }
         }
         stage('Deploy to Staging') {
             steps {
                 echo 'Iniciando Deploy para Staging...'
-                // Execute seu comando de deploy. Pode ser um script .bat específico para Windows:
-                bat 'deploy_staging.bat'  // Crie este arquivo .bat para gerenciar o deploy
+                bat 'deploy_staging.bat'
             }
         }
     }
     post {
         always {
             echo 'Limpando...'
-            // Qualquer ação de limpeza pós-pipeline, como excluir arquivos temporários, se necessário.
         }
         success {
             echo 'Pipeline executada com sucesso!'

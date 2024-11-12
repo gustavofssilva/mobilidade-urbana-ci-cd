@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    tools {
-        nodejs 'NodeJS'  // Nome da configuração de NodeJS criada nas configurações do Jenkins
-    }
     stages {
         stage('Checkout') {
             steps {
@@ -10,22 +7,28 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Instalar Dependências') {
+            steps {
+                echo 'Instalando dependências com Yarn...'
+                sh 'yarn install'
+            }
+        }
         stage('Build') {
             steps {
-                echo 'Iniciando etapa de Build...'
-                bat 'npm install'
+                echo 'Iniciando etapa de Build com Yarn...'
+                sh 'yarn build'
             }
         }
         stage('Test') {
             steps {
-                echo 'Iniciando etapa de Testes...'
-                bat 'npm test'
+                echo 'Iniciando etapa de Testes com Yarn...'
+                sh 'yarn test'
             }
         }
         stage('Deploy to Staging') {
             steps {
                 echo 'Iniciando Deploy para Staging...'
-                bat 'deploy_staging.bat'
+                sh './deploy_staging.sh'
             }
         }
     }

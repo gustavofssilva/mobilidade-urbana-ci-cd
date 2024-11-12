@@ -3,22 +3,27 @@ pipeline {
 
     stages {
         stage('Build') {
-            steps {             
-                sh 'npm install'
-                sh 'npm run build'
+            steps {
+                echo 'Building...'
+                // Exemplo: Se fosse uma aplicação Node.js
+                // sh 'npm install'
+                // sh 'npm run build'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'npm test'
+                echo 'Running tests...'
+                // Exemplo: Rodar testes de unidade
+                // sh 'npm test'
             }
         }
 
         stage('Deploy to Staging') {
             steps {
-                
-                sh './deploy_staging.sh'
+                echo 'Deploying to staging...'
+                // Exemplo: Enviar arquivos para o servidor de homologação
+                // sh './deploy_staging.sh'
             }
         }
     }

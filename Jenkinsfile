@@ -1,27 +1,43 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('Build') {
             steps {
-                echo 'Building the project...'
-                // Coloque aqui o comando para compilar o projeto
-                // Por exemplo, para Node.js, use 'npm install'
+                echo 'Building...'
+                // Exemplo: Se fosse uma aplicação Node.js
+                // sh 'npm install'
+                // sh 'npm run build'
             }
         }
+
         stage('Test') {
             steps {
-                echo 'Testing the project...'
-                // Coloque aqui o comando para rodar os testes
-                // Por exemplo, para Node.js, use 'npm test'
+                echo 'Running tests...'
+                // Exemplo: Rodar testes de unidade
+                // sh 'npm test'
             }
         }
-        stage('Deploy') {
+
+        stage('Deploy to Staging') {
             steps {
-                echo 'Deploying the project...'
-                // Coloque aqui o comando para implantar o projeto
-                // Exemplo: copiar arquivos para um servidor de homologação
+                echo 'Deploying to staging...'
+                // Exemplo: Enviar arquivos para o servidor de homologação
+                // sh './deploy_staging.sh'
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up...'
+            // sh 'rm -rf node_modules'
+        }
+        success {
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
